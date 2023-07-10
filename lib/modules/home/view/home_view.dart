@@ -19,6 +19,9 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
+          floatingActionButton: FloatingActionButton(onPressed: () {
+            controller.tagRead();
+          }),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,12 +145,14 @@ class HomeView extends GetView<HomeController> {
         SizedBox(
           height: 5,
         ),
-        Text(
-          'Nguyễn Đỗ Anh Tú',
-          style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade700),
+        Obx(
+          () => Text(
+            controller.data.toString(),
+            style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey.shade700),
+          ),
         ),
         SizedBox(
           height: 20,

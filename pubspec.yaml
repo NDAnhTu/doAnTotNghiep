@@ -48,6 +48,9 @@ dev_dependencies:
   get: ^4.6.5
   loading_animation_widget: ^1.2.0+4
   persistent_bottom_nav_bar: ^5.0.2
+  nfc_manager: ^3.3.0
+  flutter_nfc_kit: ^3.3.1
+  firebase_core: ^2.14.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
