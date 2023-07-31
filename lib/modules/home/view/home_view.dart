@@ -8,6 +8,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
 
+  final test = <String, String>{
+    "name": "con meo",
+    "owner": "con meo me",
+    "phone_number": "123",
+    "status": "none",
+  };
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -20,7 +27,8 @@ class HomeView extends GetView<HomeController> {
         },
         child: Scaffold(
           floatingActionButton: FloatingActionButton(onPressed: () {
-            controller.tagRead();
+            // controller.tagRead();
+            controller.db.collection('pets').doc().set(test);
           }),
           body: SingleChildScrollView(
             child: Column(

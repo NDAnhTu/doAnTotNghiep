@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 
 class HomeController extends GetxController {
   final _data = ''.obs;
 
   String get data => _data.value;
   set data(value) => _data.value = value;
+
+  var db = FirebaseFirestore.instance;
 
   ValueNotifier<dynamic> result = ValueNotifier(null);
 
