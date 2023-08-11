@@ -1,3 +1,4 @@
+import 'package:doantotnghiep/models/user_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:typed_data';
@@ -7,10 +8,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 
 class HomeController extends GetxController {
-  final _data = ''.obs;
+  final _nfcData = ''.obs;
+  final _userData = UserData(name: '', owner: '', phone_number: '', status: '', heavy: '', age: '', sex: '').obs;
 
-  String get data => _data.value;
-  set data(value) => _data.value = value;
+  String get nfcData => _nfcData.value;
+  UserData get userData => _userData.value;
+
+  set nfcData(value) => _nfcData.value = value;
 
   var db = FirebaseFirestore.instance;
 
@@ -25,13 +29,16 @@ class HomeController extends GetxController {
 
   void tagRead() {
     NfcManager.instance.startSession(onDiscovered: (tag) async {
-      result.value =
-          await tag.data['ndef']['cachedMessage']['records'][0]['payload'];
+      result.value = await tag.data['ndef']['cachedMessage']['records'][0]['payload'];
       String s = String.fromCharCodes(result.value as Iterable<int>).toString();
       var outputAsUint8List = Uint8List.fromList(s.codeUnits);
       print('test: ${s.substring(3, s.length)}');
-      _data.value = s.substring(3, s.length);
-      var ndef = Ndef.from(tag);
+      _nfcData.value = s.substring(3, s.length);
+      var docRef = db.collection('pets').doc(_nfcData.value);
+      docRef.get().then((value) {
+        _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
+      });
+      //var ndef = Ndef.from(tag);
       //NfcManager.instance.stopSession();
     });
 
@@ -108,3 +115,5 @@ class HomeController extends GetxController {
     super.onReady();
   }
 }
+
+

@@ -26,10 +26,6 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(onPressed: () {
-            // controller.tagRead();
-            controller.db.collection('pets').doc().set(test);
-          }),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,10 +48,11 @@ class HomeView extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Jimmy',
-                        style: TextStyle(
-                            fontSize: 38, fontWeight: FontWeight.bold),
+                      Obx(
+                        () => Text(
+                          controller.userData.name.toString(),
+                          style: const TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       const SizedBox(
                         height: 30,
@@ -93,11 +90,12 @@ class HomeView extends GetView<HomeController> {
   Widget Heavy(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Text(
-          '2.5kg',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-        ),
+      children: [
+        Obx(() =>
+          Text(
+            controller.userData.heavy.toString(),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+          )),
         Text(
           'Cân Nặng',
           style: TextStyle(
@@ -110,11 +108,12 @@ class HomeView extends GetView<HomeController> {
   Widget Age(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Text(
-          '8',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-        ),
+      children: [
+        Obx(() =>
+            Text(
+              controller.userData.age.toString(),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+            )),
         Text(
           'Tháng Tuổi',
           style: TextStyle(
@@ -127,11 +126,12 @@ class HomeView extends GetView<HomeController> {
   Widget Sex(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Text(
-          'Cái',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-        ),
+      children: [
+        Obx(() =>
+            Text(
+              controller.userData.sex.toString(),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+            )),
         Text(
           'Giới Tính',
           style: TextStyle(
@@ -155,7 +155,7 @@ class HomeView extends GetView<HomeController> {
         ),
         Obx(
           () => Text(
-            controller.data.toString(),
+            controller.userData.owner.toString(),
             style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
@@ -173,13 +173,13 @@ class HomeView extends GetView<HomeController> {
         SizedBox(
           height: 5,
         ),
-        Text(
-          '0337659972',
+        Obx(() => Text(
+          controller.userData.phone_number.toString(),
           style: TextStyle(
               fontSize: 23,
               fontWeight: FontWeight.w500,
               color: Colors.grey.shade700),
-        ),
+        ),),
         SizedBox(
           height: 20,
         ),
