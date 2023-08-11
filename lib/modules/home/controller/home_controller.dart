@@ -1,23 +1,36 @@
+import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:doantotnghiep/models/user_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:typed_data';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class HomeController extends GetxController {
   final _nfcData = ''.obs;
-  final _userData = UserData(name: '', owner: '', phone_number: '', status: '', heavy: '', age: '', sex: '').obs;
+  final _userData = UserData(name: '', owner: '', image: '', phone_number: '', status: '', heavy: '', age: '', sex: '').obs;
+  final _imagePath = ''.obs;
+  final _byteImage = ''.obs;
+  final _localImage = true.obs;
 
+
+  final storageRef = FirebaseStorage.instance.ref();
+
+  String get imagePath => _imagePath.value;
   String get nfcData => _nfcData.value;
   UserData get userData => _userData.value;
+  String get byteImage => _byteImage.value;
+  bool get localImage => _localImage.value;
 
   set nfcData(value) => _nfcData.value = value;
+  set imagePath(value) => _imagePath.value = value;
+  set localImage(value) => _localImage.value = value;
 
   var db = FirebaseFirestore.instance;
-
+  ImagePicker picker = ImagePicker();
   ValueNotifier<dynamic> result = ValueNotifier(null);
 
   @override
@@ -30,18 +43,23 @@ class HomeController extends GetxController {
   void tagRead() {
     NfcManager.instance.startSession(onDiscovered: (tag) async {
       result.value = await tag.data['ndef']['cachedMessage']['records'][0]['payload'];
-      String s = String.fromCharCodes(result.value as Iterable<int>).toString();
-      var outputAsUint8List = Uint8List.fromList(s.codeUnits);
-      print('test: ${s.substring(3, s.length)}');
-      _nfcData.value = s.substring(3, s.length);
+      String id = String.fromCharCodes(result.value as Iterable<int>).toString();
+      //var outputAsUint8List = Uint8List.fromList(id.codeUnits);
+      //print('test: ${id.substring(3, id.length)}');
+      _nfcData.value = id.substring(3, id.length);
       var docRef = db.collection('pets').doc(_nfcData.value);
       docRef.get().then((value) {
         _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
+        if (_userData.value.image.toString() == '') {
+          _localImage.value = true;
+        } else {
+          _byteImage.value = _userData.value.image.toString();
+          _localImage.value = false;
+        }
       });
       //var ndef = Ndef.from(tag);
       //NfcManager.instance.stopSession();
     });
-
     // NfcManager.instance.startSession(onDiscovered: (tag) async {
     //   Ndef? ndef = Ndef.from(tag);
     //   try {
@@ -107,6 +125,21 @@ class HomeController extends GetxController {
         return;
       }
     });
+  }
+
+  Future<void> imagePick() async {
+    await picker.pickImage(source: ImageSource.gallery, requestFullMetadata: true);
+  }
+
+  Future<void> uploadImage(filePath) async {
+    Uint8List readFile = await File(filePath).readAsBytes();
+    String imageBase64 = base64.encode(readFile);
+    db.collection('pets').doc(_nfcData.value).update({"image": imageBase64});
+  }
+
+  Future<void> loadImage(bas64) async {
+    _byteImage.value = const Base64Decoder().convert(bas64).toString();
+    print(_byteImage.value);
   }
 
   @override

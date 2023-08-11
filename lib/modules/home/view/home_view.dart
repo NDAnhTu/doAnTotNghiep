@@ -1,19 +1,25 @@
-import 'package:doantotnghiep/theme/colors.dart';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../controller/home_controller.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
 
   final test = <String, String>{
+    "age": "8",
+    "heavy": "2.5kg",
+    "image": '',
     "name": "con meo",
     "owner": "con meo me",
     "phone_number": "123",
+    "sex": "Đực",
     "status": "none",
   };
+  var image = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +37,44 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  height: 400,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/test_1.jpg"),
-                      fit: BoxFit.cover,
+                Obx(() => Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Center(
+                      child: SizedBox(
+                          height: 400,
+                          child:
+                          controller.localImage == true
+                              ? image.value == '' ? const FlutterLogo(size: 170) : Image.file(File(image.value), fit: BoxFit.contain)
+                              : controller.byteImage == '' ? const FlutterLogo(size: 170) : Image.memory(base64Decode(controller.userData.image.toString()), fit: BoxFit.contain)
+                      ),
                     ),
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Center(
+                          child: ElevatedButton(onPressed: () async {
+                            try {
+                              final imageTemp = await ImagePicker().pickImage(source: ImageSource.gallery);
+                              controller.localImage = true;
+                              if(imageTemp == null) return;
+                              image.value = imageTemp.path;
+                            } on PlatformException catch(e) {
+                              print('Failed to pick image: $e');
+                            }
+                          }, child: Text('loadImage')),
+                        ),
+                        Center(
+                          child: ElevatedButton(onPressed: () async {
+                            await Future.delayed(const Duration(microseconds: 100)).then((value) {
+                              controller.uploadImage(image.value);
+                            });
+                          }, child: Text('uploadImage')),
+                        ),
+                      ],
+                    )
+                  ],
+                )
                 ),
                 const SizedBox(
                   height: 15,
