@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:doantotnghiep/modules/bottom_navigator/bottom_navigator.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../controller/home_controller.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -32,66 +35,100 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Obx(() => Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                          height: 400,
-                          child:
-                          controller.localImage == true
-                              ? image.value == '' ? const FlutterLogo(size: 170) : Image.file(File(image.value), fit: BoxFit.contain)
-                              : controller.byteImage == '' ? const FlutterLogo(size: 170) : Image.memory(base64Decode(controller.userData.image.toString()), fit: BoxFit.contain)
+          bottomNavigationBar: bottomNavigator(),
+          body: Stack(
+            children: [
+              Obx(() => Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Stack(
+                        children: [
+                          Center(
+                            child: SizedBox(
+                                height: 400,
+                                child: controller.localImage == true
+                                    ? image.value == ''
+                                    ? const FlutterLogo(size: 170)
+                                    : Image.file(File(image.value),
+                                    fit: BoxFit.fill)
+                                    : controller.byteImage == ''
+                                    ? const FlutterLogo(size: 170)
+                                    : Image.memory(
+                                    base64Decode(controller
+                                        .userData.image
+                                        .toString()),
+                                    fit: BoxFit.fill)),
+                          ),
+                          Positioned(
+                            top: 270,
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Center(
+                                  child: ElevatedButton(
+                                      onPressed: () async {
+                                        try {
+                                          final imageTemp =
+                                          await ImagePicker().pickImage(
+                                              source:
+                                              ImageSource.gallery);
+                                          controller.localImage = true;
+                                          if (imageTemp == null) return;
+                                          image.value = (await controller.cropImage(imageTemp.path))!;
+                                        } on PlatformException catch (e) {
+                                          print('Failed to pick image: $e');
+                                        }
+                                      },
+                                      child: Text('loadImage')),
+                                ),
+                                Center(
+                                  child: ElevatedButton(
+                                      onPressed: () async {
+                                        await Future.delayed(const Duration(
+                                            microseconds: 100))
+                                            .then((value) {
+                                          controller
+                                              .uploadImage(image.value);
+                                        });
+                                      },
+                                      child: Text('uploadImage')),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Center(
-                          child: ElevatedButton(onPressed: () async {
-                            try {
-                              final imageTemp = await ImagePicker().pickImage(source: ImageSource.gallery);
-                              controller.localImage = true;
-                              if(imageTemp == null) return;
-                              image.value = imageTemp.path;
-                            } on PlatformException catch(e) {
-                              print('Failed to pick image: $e');
-                            }
-                          }, child: Text('loadImage')),
-                        ),
-                        Center(
-                          child: ElevatedButton(onPressed: () async {
-                            await Future.delayed(const Duration(microseconds: 100)).then((value) {
-                              controller.uploadImage(image.value);
-                            });
-                          }, child: Text('uploadImage')),
-                        ),
-                      ],
-                    )
-                  ],
-                )
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    ],
+                  ))),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: width,
+                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(35),
+                        topRight: Radius.circular(35)),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Obx(
                         () => Text(
                           controller.userData.name.toString(),
-                          style: const TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontSize: 38, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                       Container(
                         padding: const EdgeInsets.only(bottom: 20),
@@ -115,8 +152,8 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -127,11 +164,10 @@ class HomeView extends GetView<HomeController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Obx(() =>
-          Text(
-            controller.userData.heavy.toString(),
-            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-          )),
+        Obx(() => Text(
+              controller.userData.heavy.toString(),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+            )),
         Text(
           'Cân Nặng',
           style: TextStyle(
@@ -145,8 +181,7 @@ class HomeView extends GetView<HomeController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Obx(() =>
-            Text(
+        Obx(() => Text(
               controller.userData.age.toString(),
               style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
             )),
@@ -163,8 +198,7 @@ class HomeView extends GetView<HomeController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Obx(() =>
-            Text(
+        Obx(() => Text(
               controller.userData.sex.toString(),
               style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
             )),
@@ -209,13 +243,15 @@ class HomeView extends GetView<HomeController> {
         SizedBox(
           height: 5,
         ),
-        Obx(() => Text(
-          controller.userData.phone_number.toString(),
-          style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade700),
-        ),),
+        Obx(
+          () => Text(
+            controller.userData.phone_number.toString(),
+            style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey.shade700),
+          ),
+        ),
         SizedBox(
           height: 20,
         ),
