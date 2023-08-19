@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:doantotnghiep/modules/bottom_navigator/bottom_navigator.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../controller/home_controller.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
@@ -35,7 +33,7 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
-          bottomNavigationBar: bottomNavigator(),
+          //bottomNavigationBar: bottomNavigator(),
           body: Stack(
             children: [
               Obx(() => Positioned(

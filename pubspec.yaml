@@ -26,8 +26,10 @@ dev_dependencies:
   image_picker: ^1.0.2
   image_cropper: ^4.0.1
   google_nav_bar: ^5.0.6
+  carousel_slider: ^4.2.1
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/test_1.jpg
+    - assets/images/cs/
+    - assets/images/services/
