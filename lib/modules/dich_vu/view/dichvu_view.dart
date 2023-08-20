@@ -82,7 +82,57 @@ class DichVuView extends GetView<DichVuController> {
                   ),
                   borderRadius: BorderRadius.circular(30),
                 ),
-            )
+            ),
+            Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.shopData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: Get.height / 8.5,
+                      margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: Get.height / 8.5,
+                            width: Get.height / 8.5,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: Get.width / 1.6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(controller.shopData[index].name.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.star, color: Colors.amber),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(controller.shopData[index].rating.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
+                                  ],
+                                ),
+                                Text(controller.shopData[index].description.toString(), style: const TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis, maxLines: 2),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ),
