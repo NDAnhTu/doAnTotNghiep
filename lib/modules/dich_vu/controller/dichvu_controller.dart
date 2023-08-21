@@ -23,13 +23,10 @@ class DichVuController extends GetxController {
 
   @override
   void onInit() {
-    db.collection("shop").get().then(
-          (value) {
+    db.collection("shop").get().then((value) {
         for (var docSnapshot in value.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
           _shopData.add(ShopDataModel.fromJson(docSnapshot.data()));
         }
-        print(_shopData.length);
       },
       onError: (e) => print("Error completing: $e"),
     );

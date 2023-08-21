@@ -27,7 +27,7 @@ class DichVuView extends GetView<DichVuController> {
           children: [
             ///--- image
             Container(
-              padding: EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.only(bottom: 15),
               child: CarouselSlider(
                 options: CarouselOptions(
                   height: Get.height / 4.1,
@@ -90,45 +90,7 @@ class DichVuView extends GetView<DichVuController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.shopData.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: Get.height / 8.5,
-                      margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: Get.height / 8.5,
-                            width: Get.height / 8.5,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width / 1.6,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(controller.shopData[index].name.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star, color: Colors.amber),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(controller.shopData[index].rating.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
-                                  ],
-                                ),
-                                Text(controller.shopData[index].description.toString(), style: const TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis, maxLines: 2),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    return shopList(index);
                   },
                 ),
               ],
@@ -138,16 +100,57 @@ class DichVuView extends GetView<DichVuController> {
       ),
     );
   }
+  Widget select(String image, String text) {
+    return SizedBox(
+      height: 50,
+      child: Column(
+        children: [
+          Image.asset(image, fit: BoxFit.contain, height: 75,),
+          Text(text),
+        ],
+      ),
+    );
+  }
+  Widget shopList(index) {
+    return Container(
+      height: Get.height / 8.5,
+      margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
+      child: Row(
+        children: [
+          Container(
+            height: Get.height / 8.5,
+            width: Get.height / 8.5,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          SizedBox(
+            width: Get.width / 1.8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(controller.shopData[index].name.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
+                Row(
+                  children: [
+                    const Icon(Icons.star, color: Colors.amber),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(controller.shopData[index].rating.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+                Text(controller.shopData[index].description.toString(), style: const TextStyle(fontSize: 12), overflow: TextOverflow.clip, maxLines: 3),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-Widget select(String image, String text) {
-  return SizedBox(
-    height: 50,
-    child: Column(
-      children: [
-        Image.asset(image, fit: BoxFit.contain, height: 75,),
-        Text(text),
-      ],
-    ),
-  );
-}
