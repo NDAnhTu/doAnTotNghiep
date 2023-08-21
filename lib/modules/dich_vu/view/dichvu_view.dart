@@ -41,19 +41,24 @@ class DichVuView extends GetView<DichVuController> {
                     .toList(),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(right: 20, left: 20, bottom: 20),
-              height: Get.height / 19,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(50)
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.search),
-                  Text(' Tìm kiếm dịch vụ và phòng khám')
-                ],
+            GestureDetector(
+              onTap: () {
+                Get.toNamed('/search', arguments: [{"data": controller.shopData}]);
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 20, left: 20, bottom: 20),
+                height: Get.height / 19,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(50)
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.search),
+                    Text(' Tìm kiếm dịch vụ và phòng khám')
+                  ],
+                ),
               ),
             ),
             GridView(

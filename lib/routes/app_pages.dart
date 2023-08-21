@@ -1,5 +1,7 @@
 import 'package:doantotnghiep/modules/main/binding/main_binding.dart';
 import 'package:doantotnghiep/modules/main/view/main_view.dart';
+import 'package:doantotnghiep/modules/search/binding/search_binding.dart';
+import 'package:doantotnghiep/modules/search/view/search_view.dart';
 import 'package:get/get.dart';
 import '../modules/dich_vu/binding/dichvu_binding.dart';
 import '../modules/dich_vu/view/dichvu_view.dart';
@@ -30,6 +32,12 @@ class AppPages {
       name: _Paths.main,
       page: () => MainView(),
       binding: MainBinding(),
+      children: const [],
+    ),
+    GetPage(
+      name: _Paths.search,
+      page: () => SearchView(),
+      binding: SearchBinding(),
       children: const [],
     ),
   ];
