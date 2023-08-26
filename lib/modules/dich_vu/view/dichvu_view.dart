@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../controller/dichvu_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DichVuView extends GetView<DichVuController> {
   DichVuView({Key? key}) : super(key: key);
@@ -21,6 +22,15 @@ class DichVuView extends GetView<DichVuController> {
         ),
         titleSpacing: 0.0,
       ),
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   var db = FirebaseFirestore.instance;
+      //   var data = {
+      //     'description': '123',
+      //     'name': '123',
+      //     'rating': '123',
+      //   };
+      //   db.collection('shop').doc().set(data);
+      // }),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

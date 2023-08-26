@@ -40,24 +40,21 @@ class SearchView extends GetView<SearchViewController> {
           )
         ],
       ),
-      body: Obx(() => SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                controller.searchResult.isNotEmpty
-                    ? ListView.builder(
+      body: Obx(() => Column(
+        children: [
+          controller.searchResult.isNotEmpty
+              ? Expanded(
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controller.searchResult.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return shopList(index);
+                      return shopList(index);
                   },
-                )
-                    : Text('Không tìm thấy kết quả')
-              ],
-            ),
-          ],
-        ),
+                ),
+              )
+              : const Text('Không tìm thấy kết quả')
+        ],
       )),
     );
   }
