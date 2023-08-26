@@ -38,6 +38,7 @@ class AppPages {
       name: _Paths.search,
       page: () => SearchView(),
       binding: SearchBinding(),
+      transition: Transition.cupertinoDialog,
       children: const [],
     ),
   ];
