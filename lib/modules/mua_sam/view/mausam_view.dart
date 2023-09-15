@@ -82,6 +82,45 @@ class MuaSamView extends GetView<MuaSamController> {
                   select('assets/images/services/another.png', 'Cơ sở'),
                 ],
               ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Phụ kiện thú cưng', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+                  TextButton(
+                      child: const Text('Xem tất cả'),
+                    onPressed: () {
+                        print('1111');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.shopData.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  color: Colors.amber,
+                  width: 150,
+                  height: 150,
+                  child: const Column(
+                    children: [
+                      FlutterLogo(
+                        size: 100,
+                      )
+                    ],
+                  ),
+                );
+              },
+            )
         ],
         ),
       ),
