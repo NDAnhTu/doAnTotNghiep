@@ -6,11 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MuaSamController extends GetxController {
 
   final List<String> imgList = [
-    'assets/images/cs/cs_1.jpg',
-    'assets/images/cs/cs_2.jpg',
-    'assets/images/cs/cs_3.jpg',
-    'assets/images/cs/cs_4.jpg',
-    'assets/images/cs/cs_5.jpg',
+    'assets/images/cs/1.jpg',
+    'assets/images/cs/2.jpg',
+    'assets/images/cs/3.jpg',
+    'assets/images/cs/4.jpg',
+    'assets/images/cs/5.jpg',
     'assets/images/cs/cs_6.jpg',
     'assets/images/cs/cs_7.jpg',
   ];

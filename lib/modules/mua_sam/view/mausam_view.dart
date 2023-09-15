@@ -10,8 +10,10 @@ class MuaSamView extends GetView<MuaSamController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: Text('Pet Shop'),
+        backgroundColor: Colors.grey.shade100,
+        title: const Text('Pet Shop'),
         actions: const [
           Icon(Icons.shopping_cart),
           SizedBox(
@@ -83,15 +85,15 @@ class MuaSamView extends GetView<MuaSamController> {
                 ],
               ),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Phụ kiện thú cưng', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
                   TextButton(
                       child: const Text('Xem tất cả'),
-                    onPressed: () {
-                        print('1111');
+                      onPressed: () {
+                        Get.toNamed('/search', arguments: [{"data": controller.shopData}]);
                     },
                   ),
                 ],
@@ -99,29 +101,56 @@ class MuaSamView extends GetView<MuaSamController> {
             ),
             GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  childAspectRatio: 0.8,
                   maxCrossAxisExtent: 200,
                   crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
+                  mainAxisSpacing: 20,
+              ),
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: controller.shopData.length,
               itemBuilder: (context, index) {
                 return Container(
-                  color: Colors.amber,
-                  width: 150,
-                  height: 150,
-                  child: const Column(
+                  padding: const EdgeInsets.only(left: 12, right: 12),
+                  color: Colors.white,
+                  height: 200,
+                  child: Column(
                     children: [
-                      FlutterLogo(
-                        size: 100,
-                      )
+                      Container(
+                        color: Colors.grey.shade300,
+                        height: 150,
+                        width: 150,
+                      ),
+                      Column(
+                        children: [
+                          Text(controller.shopData[index].name.toString(), maxLines: 2, overflow: TextOverflow.ellipsis),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('230.000 VND', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.orangeAccent,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                  ),
+                                  child: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 );
               },
-            )
-        ],
+            ),
+          ],
         ),
       ),
     );
