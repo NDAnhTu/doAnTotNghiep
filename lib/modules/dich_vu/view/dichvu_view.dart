@@ -22,15 +22,6 @@ class DichVuView extends GetView<DichVuController> {
         ),
         titleSpacing: 0.0,
       ),
-      // floatingActionButton: FloatingActionButton(onPressed: () {
-      //   var db = FirebaseFirestore.instance;
-      //   var data = {
-      //     'description': '123',
-      //     'name': '123',
-      //     'rating': '123',
-      //   };
-      //   db.collection('shop').doc().set(data);
-      // }),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -127,43 +118,48 @@ class DichVuView extends GetView<DichVuController> {
     );
   }
   Widget shopList(index) {
-    return Container(
-      height: Get.height / 8.5,
-      margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
-      child: Row(
-        children: [
-          Container(
-            height: Get.height / 8.5,
-            width: Get.height / 8.5,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(10),
+    return InkWell(
+      onTap: () {
+        Get.toNamed('/all_services', arguments: [{"shopData": controller.shopData[index], "services": controller.services[index]}]);
+      },
+      child: Container(
+        height: Get.height / 8.5,
+        margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
+        child: Row(
+          children: [
+            Container(
+              height: Get.height / 8.5,
+              width: Get.height / 8.5,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          SizedBox(
-            width: Get.width / 1.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(controller.shopData[index].name.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(controller.shopData[index].rating.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
-                  ],
-                ),
-                Text(controller.shopData[index].description.toString(), style: const TextStyle(fontSize: 12), overflow: TextOverflow.clip, maxLines: 3),
-              ],
+            const SizedBox(
+              width: 10,
             ),
-          ),
-        ],
+            SizedBox(
+              width: Get.width / 1.8,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(controller.shopData[index].name.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(controller.shopData[index].rating.toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15), overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                  Text(controller.shopData[index].description.toString(), style: const TextStyle(fontSize: 12), overflow: TextOverflow.clip, maxLines: 3),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -16,8 +16,10 @@ class DichVuController extends GetxController {
   ];
 
   final _shopData = <ShopDataModel>[].obs;
+  final _services = <ServicesModel>[].obs;
 
   List<ShopDataModel> get shopData => _shopData;
+  List<ServicesModel> get services => _services;
 
   var db = FirebaseFirestore.instance;
 
@@ -26,6 +28,16 @@ class DichVuController extends GetxController {
     db.collection("shop").get().then((value) {
         for (var docSnapshot in value.docs) {
           _shopData.add(ShopDataModel.fromJson(docSnapshot.data()));
+          db.collection("shop").doc(docSnapshot.id).collection("services").get().then((data) {
+            if (data.docs.isNotEmpty) {
+              for (var servicesData in data.docs) {
+                _services.add(ServicesModel.fromJson(servicesData.data()));
+                print(servicesData.data());
+              }
+            } else {
+              print('document do not have data');
+            }
+          });
         }
       },
       onError: (e) => print("Error completing: $e"),

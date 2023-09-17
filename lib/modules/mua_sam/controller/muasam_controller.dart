@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../../../models/shop_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class MuaSamController extends GetxController {
 
   final List<String> imgList = [
