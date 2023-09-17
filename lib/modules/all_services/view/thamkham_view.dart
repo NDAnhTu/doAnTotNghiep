@@ -34,6 +34,28 @@ class AllServicesView extends GetView<AllServicesController> {
               ),
             ],
           ),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: CircleAvatar(
+                      backgroundColor: Colors.orange,
+                      child: Icon(Icons.check_outlined, color: Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Đã xác thực',
+                  style: TextStyle(color: Colors.orange, fontSize: 23, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 15, right: 15, left: 15),
             child: SizedBox(
