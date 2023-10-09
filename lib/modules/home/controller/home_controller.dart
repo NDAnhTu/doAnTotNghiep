@@ -155,6 +155,8 @@ class HomeController extends GetxController {
             print("1111");
             break;
           case DocumentChangeType.modified:
+            var data = change.doc.data();
+            _userData.value = UserData.fromJson(data!);
             _image.value = change.doc.data()!["image"];
             break;
           case DocumentChangeType.removed:
