@@ -23,7 +23,6 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -47,7 +46,8 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           Center(
                             child: SizedBox(
-                                height: 400,
+                                height: Get.width,
+                                width: Get.width,
                                 child: controller.userData.image!.isNotEmpty
                                     ? Image.memory(base64Decode(controller.image.toString()), fit: BoxFit.fill)
                                     : const FlutterLogo(size: 150,)),
@@ -59,7 +59,7 @@ class HomeView extends GetView<HomeController> {
               Positioned(
                 bottom: 0,
                 child: Container(
-                  width: width,
+                  width: Get.width,
                   padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
                   decoration: const BoxDecoration(
                     color: Colors.white,
