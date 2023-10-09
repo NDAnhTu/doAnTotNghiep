@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
   final _nfcData = ''.obs;
@@ -16,6 +17,8 @@ class HomeController extends GetxController {
   final _imagePath = ''.obs;
   final _byteImage = ''.obs;
   final _localImage = true.obs;
+  final _image = ''.obs;
+  var box           = GetStorage();
 
 
   final storageRef = FirebaseStorage.instance.ref();
@@ -24,21 +27,65 @@ class HomeController extends GetxController {
   String get nfcData => _nfcData.value;
   UserData get userData => _userData.value;
   String get byteImage => _byteImage.value;
+  String get image => _image.value;
   bool get localImage => _localImage.value;
 
   set nfcData(value) => _nfcData.value = value;
   set imagePath(value) => _imagePath.value = value;
   set localImage(value) => _localImage.value = value;
+  set userData(value) => _userData.value = value;
 
-  var db = FirebaseFirestore.instance;
+  var db  = FirebaseFirestore.instance;
+  var nfc = NfcManager.instance;
+
   ImagePicker picker = ImagePicker();
   ValueNotifier<dynamic> result = ValueNotifier(null);
 
   @override
-  void onInit() {
-    tagRead();
-    // TODO: implement onInit
+  Future<void> onInit() async {
+    await checkNFC();
+    await loadDataFromLocalStorage();
     super.onInit();
+  }
+
+  Future<void> checkNFC() async {
+    if (await nfc.isAvailable()) {
+      tagRead();
+      listener();
+    } else {
+      Get.dialog(
+        AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          title: const Text(""),
+          content: const Text("NFC not available"),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
+              },
+              child: const Text("OK", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> loadDataFromLocalStorage() async {
+    if (box.read('nfcData').toString().isNotEmpty) {
+      _nfcData.value = box.read('nfcData');
+      var docRef = db.collection('pets').doc(_nfcData.value);
+      docRef.get().then((value) {
+        _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
+        _image.value = _userData.value.image!;
+        if (_userData.value.image.toString() == '') {
+          _localImage.value = true;
+        } else {
+          _byteImage.value = _userData.value.image.toString();
+          _localImage.value = false;
+        }
+      });
+    }
   }
 
   void tagRead() {
@@ -48,9 +95,11 @@ class HomeController extends GetxController {
       //var outputAsUint8List = Uint8List.fromList(id.codeUnits);
       //print('test: ${id.substring(3, id.length)}');
       _nfcData.value = id.substring(3, id.length);
+      box.write('nfcData', _nfcData.value.toString());
       var docRef = db.collection('pets').doc(_nfcData.value);
       docRef.get().then((value) {
         _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
+        _image.value = _userData.value.image!;
         if (_userData.value.image.toString() == '') {
           _localImage.value = true;
         } else {
@@ -96,6 +145,24 @@ class HomeController extends GetxController {
     //     print("Tag isn't valid");
     //   }
     // });
+  }
+
+  Future<void> listener() async {
+    db.collection("pets").snapshots(includeMetadataChanges: true).listen((event) {
+      for (var change in event.docChanges) {
+        switch (change.type) {
+          case DocumentChangeType.added:
+            print("1111");
+            break;
+          case DocumentChangeType.modified:
+            _image.value = change.doc.data()!["image"];
+            break;
+          case DocumentChangeType.removed:
+            print("3333");
+            break;
+        }
+      }
+    });
   }
 
   Future<String?> cropImage(imagePath) async {

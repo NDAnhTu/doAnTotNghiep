@@ -33,7 +33,6 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
-          //bottomNavigationBar: bottomNavigator(),
           body: Stack(
             children: [
               Obx(() => Positioned(
@@ -49,57 +48,10 @@ class HomeView extends GetView<HomeController> {
                           Center(
                             child: SizedBox(
                                 height: 400,
-                                child: controller.localImage == true
-                                    ? image.value == ''
-                                    ? const FlutterLogo(size: 170)
-                                    : Image.file(File(image.value),
-                                    fit: BoxFit.fill)
-                                    : controller.byteImage == ''
-                                    ? const FlutterLogo(size: 170)
-                                    : Image.memory(
-                                    base64Decode(controller
-                                        .userData.image
-                                        .toString()),
-                                    fit: BoxFit.fill)),
+                                child: controller.userData.image!.isNotEmpty
+                                    ? Image.memory(base64Decode(controller.image.toString()), fit: BoxFit.fill)
+                                    : const FlutterLogo(size: 150,)),
                           ),
-                          Positioned(
-                            top: 270,
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Center(
-                                  child: ElevatedButton(
-                                      onPressed: () async {
-                                        try {
-                                          final imageTemp =
-                                          await ImagePicker().pickImage(
-                                              source:
-                                              ImageSource.gallery);
-                                          controller.localImage = true;
-                                          if (imageTemp == null) return;
-                                          image.value = (await controller.cropImage(imageTemp.path))!;
-                                        } on PlatformException catch (e) {
-                                          print('Failed to pick image: $e');
-                                        }
-                                      },
-                                      child: Text('loadImage')),
-                                ),
-                                Center(
-                                  child: ElevatedButton(
-                                      onPressed: () async {
-                                        await Future.delayed(const Duration(
-                                            microseconds: 100))
-                                            .then((value) {
-                                          controller
-                                              .uploadImage(image.value);
-                                        });
-                                      },
-                                      child: Text('uploadImage')),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ],
@@ -118,12 +70,22 @@ class HomeView extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Obx(
-                        () => Text(
-                          controller.userData.name.toString(),
-                          style: const TextStyle(
-                              fontSize: 38, fontWeight: FontWeight.bold),
-                        ),
+                      Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                              controller.userData.name.toString(),
+                              style: const TextStyle(
+                                  fontSize: 38, fontWeight: FontWeight.bold),
+                            ),
+                          IconButton(
+                              onPressed: () {
+                                Get.toNamed('/edit', arguments: [{"nfcData": controller.nfcData, "userData": controller.userData}]);
+                              },
+                              icon: controller.userData.name!.isNotEmpty ? const Icon(Icons.edit_note, color: Colors.black, size: 30) : const SizedBox(),
+                          ),
+                        ],
+                      ),
                       ),
                       const SizedBox(
                         height: 15,

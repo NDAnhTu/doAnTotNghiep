@@ -1,5 +1,7 @@
 import 'package:doantotnghiep/modules/all_services/binding/thamkham_binding.dart';
 import 'package:doantotnghiep/modules/all_services/view/thamkham_view.dart';
+import 'package:doantotnghiep/modules/edit_page/binding/edit_binding.dart';
+import 'package:doantotnghiep/modules/edit_page/view/edit_view.dart';
 import 'package:doantotnghiep/modules/main/binding/main_binding.dart';
 import 'package:doantotnghiep/modules/main/view/main_view.dart';
 import 'package:doantotnghiep/modules/search/binding/search_binding.dart';
@@ -47,6 +49,13 @@ class AppPages {
       name: _Paths.allServices,
       page: () => AllServicesView(),
       binding: AllServicesBinding(),
+      transition: Transition.cupertinoDialog,
+      children: const [],
+    ),
+    GetPage(
+      name: _Paths.edit,
+      page: () => EditView(),
+      binding: EditBinding(),
       transition: Transition.cupertinoDialog,
       children: const [],
     ),

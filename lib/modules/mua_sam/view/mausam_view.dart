@@ -13,9 +13,10 @@ class MuaSamView extends GetView<MuaSamController> {
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade100,
-        title: const Text('Pet Shop'),
+        elevation: 0,
+        title: const Text('Pet Shop', style: TextStyle(color: Colors.black),),
         actions: const [
-          Icon(Icons.shopping_cart),
+          Icon(Icons.shopping_cart, color: Colors.black),
           SizedBox(
             width: 15,
           )
@@ -35,9 +36,9 @@ class MuaSamView extends GetView<MuaSamController> {
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(50)
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.search),
                     Text(' Tìm kiếm dịch vụ và phòng khám')
                   ],

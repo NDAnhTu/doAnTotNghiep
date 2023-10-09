@@ -34,10 +34,10 @@ class AllServicesView extends GetView<AllServicesController> {
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
             child: Row(
-              children: [
+              children: const [
                 SizedBox(
                   height: 25,
                   width: 25,

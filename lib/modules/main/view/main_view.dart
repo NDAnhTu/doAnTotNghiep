@@ -29,7 +29,7 @@ class MainView extends StatelessWidget {
               backgroundColor: Colors.white,
               tabBackgroundColor: Colors.purple.withOpacity(0.1),
               padding: const EdgeInsets.all(15),
-              tabMargin: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+              tabMargin: const EdgeInsets.fromLTRB(5, 5, 5, 10),
               onTabChange: (index) {
                 controller.changeTabIndex(index);
               },

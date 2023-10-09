@@ -11,11 +11,13 @@ class DichVuView extends GetView<DichVuController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
         leading: const Icon(Icons.location_on_rounded, color: Colors.red,),
-        title: const Column(
+        title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             Text('Địa chỉ của bạn', style: TextStyle(color: Colors.grey, fontSize: 13),),
             Text('ĐH Sư Phạm Kĩ Thuật', style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),),
           ],
@@ -53,9 +55,9 @@ class DichVuView extends GetView<DichVuController> {
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(50)
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(Icons.search),
                     Text(' Tìm kiếm dịch vụ và phòng khám')
                   ],
