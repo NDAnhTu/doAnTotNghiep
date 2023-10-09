@@ -28,13 +28,17 @@ class EditController extends GetxController {
 
   var db  = FirebaseFirestore.instance;
 
+  TextEditingController name  = TextEditingController();
+  TextEditingController heavy = TextEditingController();
+
 
   @override
   void onInit() {
     super.onInit();
     _nfcData.value       = argumentData[0]['nfcData'];
     _userData.value      = argumentData[0]['userData'];
-
+    name.text  = _userData.value.name!;
+    heavy.text = _userData.value.heavy!;
   }
 
   Future<String?> cropImage(imagePath) async {

@@ -124,10 +124,11 @@ class HomeView extends GetView<HomeController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Obx(() => Text(
-              controller.userData.heavy.toString(),
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-            )),
+        Obx(() =>
+            controller.userData.heavy!.isNotEmpty
+                ? Text("${controller.userData.heavy.toString()}kg", style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500))
+                : const Text('', style: TextStyle(fontSize: 30),),
+        ),
         Text(
           'Cân Nặng',
           style: TextStyle(

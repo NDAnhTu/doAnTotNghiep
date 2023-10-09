@@ -27,53 +27,76 @@ class EditView extends GetView<EditController> {
         backgroundColor: Colors.orange,
         title: const Text('Edit'),
       ),
-      body: Obx(() => Column(
-        children: [
-          Center(
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.rectangle,
+      body: Obx(() => SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                ),
+                child: controller.localImage ? Image.file(File(image.value)) : Image.memory(base64Decode(controller.userData.image.toString()), fit: BoxFit.fill),
               ),
-              child: controller.localImage ? Image.file(File(image.value)) : Image.memory(base64Decode(controller.userData.image.toString()), fit: BoxFit.fill),
             ),
-          ),
-          Row(
-            mainAxisAlignment:
-            MainAxisAlignment.spaceEvenly,
-            children: [
-              Center(
-                child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        final imageTemp = await ImagePicker().pickImage(source: ImageSource.gallery);
-                        if (imageTemp == null) return;
-                        image.value = (await controller.cropImage(imageTemp.path))!;
-                        if (imageTemp.toString().isEmpty) {
-                          controller.localImage = false;
-                        } else {
-                          controller.localImage = true;
+            Row(
+              mainAxisAlignment:
+              MainAxisAlignment.spaceEvenly,
+              children: [
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          final imageTemp = await ImagePicker().pickImage(source: ImageSource.gallery);
+                          if (imageTemp == null) return;
+                          image.value = (await controller.cropImage(imageTemp.path))!;
+                          if (imageTemp.toString().isEmpty) {
+                            controller.localImage = false;
+                          } else {
+                            controller.localImage = true;
+                          }
+                        } on PlatformException catch (e) {
+                          print('Failed to pick image: $e');
                         }
-                      } on PlatformException catch (e) {
-                        print('Failed to pick image: $e');
-                      }
-                    },
-                    child: const Text('loadImage')),
+                      },
+                      child: const Text('loadImage')),
+                ),
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await Future.delayed(const Duration(
+                            microseconds: 100))
+                            .then((value) {
+                          controller
+                              .uploadImage(image.value);
+                        });
+                      },
+                      child: const Text('uploadImage')),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20 ,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: TextFormField(
+                controller: controller.name,
+                decoration: const InputDecoration(
+                    prefixText: 'Tên: '
+                ),
               ),
-              Center(
-                child: ElevatedButton(
-                    onPressed: () async {
-                      await Future.delayed(const Duration(
-                          microseconds: 100))
-                          .then((value) {
-                        controller
-                            .uploadImage(image.value);
-                      });
-                    },
-                    child: const Text('uploadImage')),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: TextFormField(
+                controller: controller.heavy,
+                decoration: const InputDecoration(
+                    prefixText: 'Cân nặng (kg): '
+                ),
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       )),
     );
   }
