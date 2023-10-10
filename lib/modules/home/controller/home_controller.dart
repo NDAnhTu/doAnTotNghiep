@@ -11,14 +11,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../_auth/authen_service.dart';
+
 class HomeController extends GetxController {
+  final auth       = Get.find<AuthenService>();
   final _nfcData = ''.obs;
   final _userData = UserData(name: '', owner: '', image: '', phone_number: '', status: '', heavy: '', age: '', sex: '').obs;
   final _imagePath = ''.obs;
   final _byteImage = ''.obs;
   final _localImage = true.obs;
   final _image = ''.obs;
-  var box           = GetStorage();
+  var box = GetStorage();
 
 
   final storageRef = FirebaseStorage.instance.ref();
@@ -74,6 +77,7 @@ class HomeController extends GetxController {
   Future<void> loadDataFromLocalStorage() async {
     if (box.read('nfcData').toString().isNotEmpty) {
       _nfcData.value = box.read('nfcData');
+      auth.userID.value = _nfcData.value;
       var docRef = db.collection('pets').doc(_nfcData.value);
       docRef.get().then((value) {
         _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
@@ -95,6 +99,7 @@ class HomeController extends GetxController {
       //var outputAsUint8List = Uint8List.fromList(id.codeUnits);
       //print('test: ${id.substring(3, id.length)}');
       _nfcData.value = id.substring(3, id.length);
+      auth.userID.value = _nfcData.value;
       box.write('nfcData', _nfcData.value.toString());
       var docRef = db.collection('pets').doc(_nfcData.value);
       docRef.get().then((value) {

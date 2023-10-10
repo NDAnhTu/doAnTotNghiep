@@ -35,7 +35,7 @@ class DichVuController extends GetxController {
             if (data.docs.isNotEmpty) {
               for (var servicesData in data.docs) {
                 _services.add(ServicesModel.fromJson(servicesData.data()));
-                print(servicesData.data());
+                // print(servicesData.data());
               }
             } else {
               print('document do not have data');

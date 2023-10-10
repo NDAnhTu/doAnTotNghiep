@@ -1,3 +1,4 @@
+import 'package:doantotnghiep/models/schedule_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/thamkham_controller.dart';
@@ -120,45 +121,36 @@ class AllServicesView extends GetView<AllServicesController> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    width: Get.width,
-                    height: 150,
-                    child: Image.asset(
-                      'assets/images/services/shop/map.jpg',
-                      fit: BoxFit.fill,
+            Obx(() => GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+              ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.schedule.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    controller.updateSchedule(index);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(20),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: controller.schedule[index].customer_id!.isEmpty ? Colors.green : Colors.red,
+                      border: Border.all(
+                        color: controller.schedule[index].customer_id!.isEmpty ? Colors.green : Colors.red,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                    ),
+                    child: Center(
+                        child: Text(controller.schedule[index].time.toString(), style: const TextStyle(color: Colors.white))
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.location_on, color: Colors.red, size: 30),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                            controller.shopData.city.toString(),
-                            style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          controller.shopData.address.toString(),
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+                );
+              },
+            )),
           ],
         ),
       ),
