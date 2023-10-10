@@ -10,10 +10,18 @@ class SearchView extends GetView<SearchViewController> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(Icons.chevron_left, size: 30, color: Colors.black),
+        ),
         title: Padding(
           padding: const EdgeInsets.only(top: 5),
           child: Container(
-            height: Get.height / 22,
+            height: Get.height / 20,
             decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(50)
@@ -23,7 +31,7 @@ class SearchView extends GetView<SearchViewController> {
               onChanged: (value) => controller.runFilter(value),
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.zero,
-                  prefixIcon: const Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search, color: Colors.black),
                   hintText: 'Tìm kiếm dịch vụ và phòng khám',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -35,8 +43,8 @@ class SearchView extends GetView<SearchViewController> {
         ),
         actions: const [
           SizedBox(
-            width: 20,
-          )
+            width: 10,
+          ),
         ],
       ),
       body: Obx(() => Column(
