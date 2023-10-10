@@ -27,7 +27,10 @@ class DichVuController extends GetxController {
   void onInit() {
     db.collection("shop").get().then((value) {
         for (var docSnapshot in value.docs) {
-          _shopData.add(ShopDataModel.fromJson(docSnapshot.data()));
+          ShopDataModel shopData = ShopDataModel();
+          shopData    = ShopDataModel.fromJson(docSnapshot.data());
+          shopData.id = docSnapshot.id;
+          _shopData.add(shopData);
           db.collection("shop").doc(docSnapshot.id).collection("services").get().then((data) {
             if (data.docs.isNotEmpty) {
               for (var servicesData in data.docs) {

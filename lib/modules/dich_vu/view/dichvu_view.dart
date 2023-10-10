@@ -24,6 +24,9 @@ class DichVuView extends GetView<DichVuController> {
         ),
         titleSpacing: 0.0,
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        
+      }),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

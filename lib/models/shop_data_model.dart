@@ -1,4 +1,5 @@
 class ShopDataModel {
+  String? id;
   String? description;
   String? name;
   String? rating;
