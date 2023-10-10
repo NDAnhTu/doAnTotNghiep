@@ -48,13 +48,13 @@ class EditController extends GetxController {
 
   Future<String?> cropImage(imagePath) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
+      compressQuality: 80,
       sourcePath: imagePath,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,
         CropAspectRatioPreset.original,
         CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
       ],
       uiSettings: [
         AndroidUiSettings(

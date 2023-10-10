@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../controller/home_controller.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
@@ -32,13 +31,17 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
-          body: Stack(
-            children: [
-              Obx(() => Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Column(
+            body: SlidingUpPanel(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
+              ),
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+              margin: const EdgeInsets.only(top: 35),
+              minHeight: Get.height - Get.width - 40,
+              maxHeight: Get.height,
+              /// image
+              body: Obx(() => Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -49,72 +52,83 @@ class HomeView extends GetView<HomeController> {
                                 height: Get.width,
                                 width: Get.width,
                                 child: controller.userData.image!.isNotEmpty
-                                    ? Image.memory(base64Decode(controller.image.toString()), fit: BoxFit.fill)
-                                    : const FlutterLogo(size: 150,)),
+                                    ? Image.memory(
+                                        base64Decode(controller.image.toString()),
+                                        fit: BoxFit.fill)
+                                    : const FlutterLogo(
+                                        size: 150,
+                                      )),
                           ),
                         ],
                       ),
                     ],
-                  ))),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: Get.width,
-                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(35),
-                        topRight: Radius.circular(35)),
+                  )),
+              /// information
+              panelBuilder: (ScrollController sc) => scrollView(context, sc),
+        )),
+      ),
+    );
+  }
+
+  Widget scrollView(BuildContext context, ScrollController sc) {
+    return ScrollConfiguration(
+      behavior: const ScrollBehavior(),
+      child: GlowingOverscrollIndicator(
+        showLeading: false,
+        showTrailing: false,
+        axisDirection: AxisDirection.up,
+        color: Colors.transparent,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          controller: sc,
+          children: [
+            Obx(() => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    controller.userData.name.toString(),
+                    style: const TextStyle(
+                        fontSize: 38, fontWeight: FontWeight.bold),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(() => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              controller.userData.name.toString(),
-                              style: const TextStyle(
-                                  fontSize: 38, fontWeight: FontWeight.bold),
-                            ),
-                          IconButton(
-                              onPressed: () {
-                                Get.toNamed('/edit', arguments: [{"nfcData": controller.nfcData, "userData": controller.userData}]);
-                              },
-                              icon: controller.userData.name!.isNotEmpty ? const Icon(Icons.edit_note, color: Colors.black, size: 30) : const SizedBox(),
-                          ),
-                        ],
-                      ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom:
-                                    BorderSide(color: Colors.grey.shade300))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Heavy(context),
-                            Age(context),
-                            Sex(context),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      User(context)
-                    ],
+                  IconButton(
+                    onPressed: () {
+                      Get.toNamed('/edit', arguments: [
+                        {
+                          "nfcData": controller.nfcData,
+                          "userData": controller.userData
+                        }
+                      ]);
+                    },
+                    icon: controller.userData.name!.isNotEmpty
+                        ? const Icon(Icons.edit_note,
+                        color: Colors.black, size: 30)
+                        : const SizedBox(),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              padding: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                  border:
+                  Border(bottom: BorderSide(color: Colors.grey.shade300))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Heavy(context),
+                  Age(context),
+                  Sex(context),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            User(context),
+          ],
         ),
       ),
     );
@@ -124,12 +138,17 @@ class HomeView extends GetView<HomeController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Obx(() =>
-            controller.userData.heavy!.isNotEmpty
-                ? Text("${controller.userData.heavy.toString()}kg", style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500))
-                : const Text('', style: TextStyle(fontSize: 30),),
+        Obx(
+          () => controller.userData.heavy!.isNotEmpty
+              ? Text("${controller.userData.heavy.toString()}kg",
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.w500))
+              : const Text(
+                  '',
+                  style: TextStyle(fontSize: 30),
+                ),
         ),
-        Text(
+        const Text(
           'Cân Nặng',
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w400, color: Colors.grey),
