@@ -42,7 +42,7 @@ class MainView extends StatelessWidget {
                 GButton(
                   haptic: true,
                   icon: Icons.healing_sharp,
-                  text: 'Thăm Khám',
+                  text: 'Thông Tin',
                 ),
                 GButton(
                   haptic: true,

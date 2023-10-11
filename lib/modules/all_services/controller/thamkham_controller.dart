@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../../../models/schedule_model.dart';
 import '../../../models/shop_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../_auth/authen_service.dart';
 
 class AllServicesController extends GetxController {
