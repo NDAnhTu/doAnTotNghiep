@@ -37,7 +37,7 @@ class HomeView extends GetView<HomeController> {
                 topRight: Radius.circular(35),
               ),
               padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-              margin: const EdgeInsets.only(top: 35),
+              margin: EdgeInsets.only(top: Get.height / 20),
               minHeight: Get.height - Get.width - 40,
               maxHeight: Get.height,
               /// image
