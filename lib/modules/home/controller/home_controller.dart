@@ -56,21 +56,22 @@ class HomeController extends GetxController {
       tagRead();
       listener();
     } else {
-      Get.dialog(
-        AlertDialog(
-          actionsAlignment: MainAxisAlignment.center,
-          title: const Text(""),
-          content: const Text("NFC not available"),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
-              },
-              child: const Text("OK", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-            ),
-          ],
-        ),
-      );
+      loadTest();
+      // Get.dialog(
+      //   AlertDialog(
+      //     actionsAlignment: MainAxisAlignment.center,
+      //     title: const Text(""),
+      //     content: const Text("NFC not available"),
+      //     actions: [
+      //       TextButton(
+      //         onPressed: () async {
+      //           Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
+      //         },
+      //         child: const Text("OK", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+      //       ),
+      //     ],
+      //   ),
+      // );
     }
   }
 
@@ -90,6 +91,22 @@ class HomeController extends GetxController {
         }
       });
     }
+  }
+
+  Future<void> loadTest() async {
+    _nfcData.value = '1m6kc1nLyi9olQruQyVj';
+    auth.userID.value = _nfcData.value;
+    var docRef = db.collection('pets').doc(_nfcData.value);
+    docRef.get().then((value) {
+      _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
+      _image.value = _userData.value.image!;
+      if (_userData.value.image.toString() == '') {
+        _localImage.value = true;
+      } else {
+        _byteImage.value = _userData.value.image.toString();
+        _localImage.value = false;
+      }
+    });
   }
 
   void tagRead() {
