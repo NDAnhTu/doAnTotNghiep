@@ -11,9 +11,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import '../../../models/user_data_model.dart';
+import '../../_auth/authen_service.dart';
 
 class EditController extends GetxController {
   dynamic argumentData    = Get.arguments;
+  final auth        = Get.find<AuthenService>();
   final _localImage = false.obs;
   final _nfcData    = ''.obs;
   final _userData   = UserData(name: '', owner: '', image: '', phone_number: '', status: '', heavy: '', age: '', sex: '').obs;
@@ -49,7 +51,7 @@ class EditController extends GetxController {
 
   Future<String?> cropImage(imagePath) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
-      compressQuality: 80,
+      compressQuality: 70,
       sourcePath: imagePath,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
@@ -85,7 +87,7 @@ class EditController extends GetxController {
 
   Future<void> uploadData(String name, String heavy, String image) async {
     if (image.isEmpty) {
-      db.collection("pets").doc(_nfcData.value).update({"name": name, "heavy": heavy}).then(
+      db.collection("pets").doc(auth.userID.value).update({"name": name, "heavy": heavy}).then(
               (value) async {
                 await Future.delayed(const Duration(milliseconds: 500));
                 _loading.value = false;
@@ -93,7 +95,7 @@ class EditController extends GetxController {
               },
           onError: (e) => print("Error updating document $e"));
     } else {
-      db.collection("pets").doc(_nfcData.value).update({"name": name, "heavy": heavy, "image": image}).then(
+      db.collection("pets").doc(auth.userID.value).update({"name": name, "heavy": heavy, "image": image}).then(
               (value) async {
                 await Future.delayed(const Duration(milliseconds: 500));
                 _loading.value = false;

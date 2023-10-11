@@ -57,6 +57,7 @@ class HomeController extends GetxController {
       listener();
     } else {
       loadTest();
+      listener();
       // Get.dialog(
       //   AlertDialog(
       //     actionsAlignment: MainAxisAlignment.center,
