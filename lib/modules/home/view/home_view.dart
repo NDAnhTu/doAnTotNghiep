@@ -48,16 +48,17 @@ class HomeView extends GetView<HomeController> {
                       Stack(
                         children: [
                           Center(
-                            child: SizedBox(
-                                height: Get.width,
-                                width: Get.width,
-                                child: controller.userData.image!.isNotEmpty
-                                    ? Image.memory(
-                                        base64Decode(controller.image.toString()),
-                                        fit: BoxFit.fill)
-                                    : const FlutterLogo(
-                                        size: 150,
-                                      )),
+                            child: Container(
+                              height: Get.width,
+                              width: Get.width,
+                              color: Colors.white,
+                              child: controller.userData.image!.isNotEmpty
+                                  ? Image.memory(
+                                      base64Decode(controller.image.toString()),
+                                      fit: BoxFit.fill)
+                                  // : const FlutterLogo(size: 150,)),
+                                  : Image.asset('assets/images/bg.png'),
+                            ),
                           ),
                         ],
                       ),
