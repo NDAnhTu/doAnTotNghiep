@@ -1,5 +1,5 @@
-import 'package:doantotnghiep/models/schedule_model.dart';
 import 'package:get/get.dart';
+import '../../../models/schedule_model.dart';
 import '../../../models/shop_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -40,7 +40,6 @@ class AllServicesController extends GetxController {
       for (var change in event.docChanges) {
         switch (change.type) {
           case DocumentChangeType.added:
-            print("1111");
             break;
           case DocumentChangeType.modified:
             var data = change.doc.data();

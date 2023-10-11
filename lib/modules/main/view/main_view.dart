@@ -1,8 +1,8 @@
-import 'package:doantotnghiep/modules/home/view/home_view.dart';
-import 'package:doantotnghiep/modules/mua_sam/view/mausam_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../dich_vu/view/dichvu_view.dart';
+import '../../home/view/home_view.dart';
+import '../../mua_sam/view/mausam_view.dart';
 import '../../tham_kham/view/thamkham_view.dart';
 import '../controller/main_controller.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';

@@ -1,4 +1,3 @@
-import 'package:doantotnghiep/models/schedule_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/thamkham_controller.dart';

@@ -1,16 +1,16 @@
-import 'package:doantotnghiep/modules/all_services/binding/thamkham_binding.dart';
-import 'package:doantotnghiep/modules/all_services/view/thamkham_view.dart';
-import 'package:doantotnghiep/modules/edit_page/binding/edit_binding.dart';
-import 'package:doantotnghiep/modules/edit_page/view/edit_view.dart';
-import 'package:doantotnghiep/modules/main/binding/main_binding.dart';
-import 'package:doantotnghiep/modules/main/view/main_view.dart';
-import 'package:doantotnghiep/modules/search/binding/search_binding.dart';
-import 'package:doantotnghiep/modules/search/view/search_view.dart';
 import 'package:get/get.dart';
+import '../modules/all_services/binding/thamkham_binding.dart';
+import '../modules/all_services/view/thamkham_view.dart';
 import '../modules/dich_vu/binding/dichvu_binding.dart';
 import '../modules/dich_vu/view/dichvu_view.dart';
+import '../modules/edit_page/binding/edit_binding.dart';
+import '../modules/edit_page/view/edit_view.dart';
 import '../modules/home/binding/home_binding.dart';
 import '../modules/home/view/home_view.dart';
+import '../modules/main/binding/main_binding.dart';
+import '../modules/main/view/main_view.dart';
+import '../modules/search/binding/search_binding.dart';
+import '../modules/search/view/search_view.dart';
 part 'app_routes.dart';
 
 class AppPages {

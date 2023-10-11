@@ -1,6 +1,7 @@
-import 'package:doantotnghiep/models/shop_data_model.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../models/shop_data_model.dart';
 
 class DichVuController extends GetxController {
   @override

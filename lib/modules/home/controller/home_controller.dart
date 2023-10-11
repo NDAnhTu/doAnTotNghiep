@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:doantotnghiep/models/user_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -11,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../../models/user_data_model.dart';
 import '../../_auth/authen_service.dart';
 
 class HomeController extends GetxController {
@@ -157,7 +157,6 @@ class HomeController extends GetxController {
       for (var change in event.docChanges) {
         switch (change.type) {
           case DocumentChangeType.added:
-            print("1111");
             break;
           case DocumentChangeType.modified:
             var data = change.doc.data();

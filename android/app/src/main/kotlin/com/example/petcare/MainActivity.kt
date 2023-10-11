@@ -1,4 +1,4 @@
-package datn.ndanhtu.lgh.petmanager
+package com.example.petcare
 
 import io.flutter.embedding.android.FlutterActivity
 
