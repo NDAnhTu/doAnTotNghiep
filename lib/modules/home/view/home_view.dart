@@ -83,6 +83,7 @@ class HomeView extends GetView<HomeController> {
         axisDirection: AxisDirection.up,
         color: Colors.transparent,
         child: ListView(
+          shrinkWrap: true,
           padding: EdgeInsets.zero,
           controller: sc,
           children: [
@@ -131,16 +132,6 @@ class HomeView extends GetView<HomeController> {
             const SizedBox(
               height: 30,
             ),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
-            User(context),
             User(context),
             User(context),
             User(context),
@@ -217,12 +208,12 @@ class HomeView extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Họ và Tên chủ:',
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w400, color: Colors.grey),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         Obx(
@@ -234,15 +225,15 @@ class HomeView extends GetView<HomeController> {
                 color: Colors.grey.shade700),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Text(
+        const Text(
           'Số điện thoại',
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w400, color: Colors.grey),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         Obx(
@@ -254,7 +245,7 @@ class HomeView extends GetView<HomeController> {
                 color: Colors.grey.shade700),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(

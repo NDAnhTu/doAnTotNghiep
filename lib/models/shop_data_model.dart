@@ -5,6 +5,7 @@ class ShopDataModel {
   String? rating;
   String? city;
   String? address;
+  String? thumb;
 
   ShopDataModel({
     this.name,
@@ -17,6 +18,7 @@ class ShopDataModel {
     rating        = json["rating"];
     city          = json["city"];
     address       = json["address"];
+    thumb         = json["thumb"];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,6 +28,7 @@ class ShopDataModel {
     data["rating"]        = rating;
     data["city"]          = city;
     data["address"]       = address;
+    data["thumb"]         = thumb;
     return data;
   }
 }

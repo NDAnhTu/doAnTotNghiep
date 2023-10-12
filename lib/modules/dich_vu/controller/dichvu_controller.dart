@@ -43,7 +43,8 @@ class DichVuController extends GetxController {
             }
           });
         }
-      },
+        // _shopData.shuffle();
+    },
       onError: (e) => print("Error completing: $e"),
     );
     super.onInit();

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/search_controller.dart';
@@ -78,6 +80,13 @@ class SearchView extends GetView<SearchViewController> {
               shape: BoxShape.rectangle,
               color: Colors.grey,
               borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                  width: 0.1
+              ),
+              image: DecorationImage(
+                image: MemoryImage(base64Decode(controller.searchResult[index].thumb.toString())),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(

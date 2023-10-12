@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/dichvu_controller.dart';
@@ -137,6 +139,13 @@ class DichVuView extends GetView<DichVuController> {
                 shape: BoxShape.rectangle,
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  width: 0.1
+                ),
+                image: DecorationImage(
+                  image: MemoryImage(base64Decode(controller.shopData[index].thumb.toString())),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(

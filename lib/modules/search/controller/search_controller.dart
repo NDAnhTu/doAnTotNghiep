@@ -4,10 +4,10 @@ import '../../../models/shop_data_model.dart';
 class SearchViewController extends GetxController {
   dynamic argumentData = Get.arguments;
 
-  final _shopData = <ShopDataModel>[].obs;
+  final _shopData     = <ShopDataModel>[].obs;
   final _searchResult = <ShopDataModel>[].obs;
 
-  List<ShopDataModel> get shopData => _shopData;
+  List<ShopDataModel> get shopData     => _shopData;
   List<ShopDataModel> get searchResult => _searchResult;
 
   @override
