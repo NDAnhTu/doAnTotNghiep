@@ -49,7 +49,6 @@ class EditController extends GetxController {
   }
 
   Future<String?> cropImage(imagePath) async {
-    print(imagePath);
     CroppedFile? croppedFile = await ImageCropper().cropImage(
       compressFormat: ImageCompressFormat.jpg,
       sourcePath: imagePath,
