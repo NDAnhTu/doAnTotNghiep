@@ -156,6 +156,9 @@ class EditView extends GetView<EditController> {
                 ),
               ),
               ),
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ),
       )),
