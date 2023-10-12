@@ -47,6 +47,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     await loadDataFromLocalStorage().then((value) async {
+      listener();
       if (value == false) {
         await checkNFC();
       }

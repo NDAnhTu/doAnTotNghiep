@@ -3,15 +3,11 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
-
 import '../../../models/user_data_model.dart';
 import '../../_auth/authen_service.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class EditController extends GetxController {
   dynamic argumentData    = Get.arguments;
@@ -39,6 +35,9 @@ class EditController extends GetxController {
   TextEditingController name  = TextEditingController();
   TextEditingController heavy = TextEditingController();
 
+  FocusNode nameFocusNode   = FocusNode();
+  FocusNode heavyFocusNode  = FocusNode();
+
 
   @override
   void onInit() {
@@ -50,8 +49,9 @@ class EditController extends GetxController {
   }
 
   Future<String?> cropImage(imagePath) async {
+    print(imagePath);
     CroppedFile? croppedFile = await ImageCropper().cropImage(
-      compressQuality: 70,
+      compressFormat: ImageCompressFormat.jpg,
       sourcePath: imagePath,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
@@ -78,11 +78,23 @@ class EditController extends GetxController {
     _loading.value = true;
     if (_image.value.isNotEmpty) {
       Uint8List readFile = await File(filePath).readAsBytes();
-      String imageBase64 = base64.encode(readFile);
+      var data = await compressList(readFile);
+      String imageBase64 = base64.encode(data);
       await uploadData(name.text, heavy.text, imageBase64);
     } else {
       await uploadData(name.text, heavy.text, '');
     }
+  }
+
+  Future<Uint8List> compressList(Uint8List list) async {
+    final result = await FlutterImageCompress.compressWithList(
+      list,
+      minHeight: 1080,
+      minWidth: 1080,
+      quality: 80,
+      format: CompressFormat.webp,
+    );
+    return result;
   }
 
   Future<void> uploadData(String name, String heavy, String image) async {
@@ -103,6 +115,15 @@ class EditController extends GetxController {
               },
           onError: (e) => print("Error updating document $e"));
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    name.dispose();
+    heavy.dispose();
+    nameFocusNode.dispose();
+    heavyFocusNode.dispose();
   }
 }
 

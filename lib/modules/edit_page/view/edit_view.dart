@@ -84,6 +84,10 @@ class EditView extends GetView<EditController> {
               padding: const EdgeInsets.only(left: 35, right: 35),
               child: TextFormField(
                 controller: controller.name,
+                focusNode: controller.nameFocusNode,
+                onFieldSubmitted: (value) {
+                  FocusScope.of(context).requestFocus(controller.heavyFocusNode);
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: const BorderSide(width: 1, color: Colors.grey),
@@ -111,7 +115,8 @@ class EditView extends GetView<EditController> {
             Padding(
               padding: const EdgeInsets.only(left: 35, right: 35),
               child: TextFormField(
-                keyboardType: TextInputType.number,
+                keyboardType: const TextInputType.numberWithOptions(signed: true),
+                focusNode: controller.heavyFocusNode,
                 controller: controller.heavy,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
