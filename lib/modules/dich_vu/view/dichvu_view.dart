@@ -11,11 +11,12 @@ class DichVuView extends GetView<DichVuController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: const Icon(Icons.location_on_rounded, color: Colors.red,),
         title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text('Địa chỉ của bạn', style: TextStyle(color: Colors.grey, fontSize: 13),),

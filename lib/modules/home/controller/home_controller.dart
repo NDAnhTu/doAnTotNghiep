@@ -46,8 +46,11 @@ class HomeController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    await checkNFC();
-    await loadDataFromLocalStorage();
+    await loadDataFromLocalStorage().then((value) async {
+      if (value == false) {
+        await checkNFC();
+      }
+    });
     super.onInit();
   }
 
@@ -56,29 +59,27 @@ class HomeController extends GetxController {
       tagRead();
       listener();
     } else {
-      loadTest();
-      listener();
-      // Get.dialog(
-      //   AlertDialog(
-      //     actionsAlignment: MainAxisAlignment.center,
-      //     title: const Text(""),
-      //     content: const Text("NFC not available"),
-      //     actions: [
-      //       TextButton(
-      //         onPressed: () async {
-      //           Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
-      //         },
-      //         child: const Text("OK", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-      //       ),
-      //     ],
-      //   ),
-      // );
+      Get.dialog(
+        AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          title: const Text(""),
+          content: const Text("NFC not available"),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
+              },
+              child: const Text("OK", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+            ),
+          ],
+        ),
+      );
     }
   }
 
-  Future<void> loadDataFromLocalStorage() async {
-    if (box.read('nfcData').toString().isNotEmpty) {
-      _nfcData.value = box.read('nfcData');
+  Future<bool> loadDataFromLocalStorage() async {
+    if (auth.userID.isNotEmpty) {
+      _nfcData.value = auth.userID.value;
       auth.userID.value = _nfcData.value;
       var docRef = db.collection('pets').doc(_nfcData.value);
       docRef.get().then((value) {
@@ -91,23 +92,10 @@ class HomeController extends GetxController {
           _localImage.value = false;
         }
       });
+      return true;
+    } else {
+      return false;
     }
-  }
-
-  Future<void> loadTest() async {
-    _nfcData.value = '1m6kc1nLyi9olQruQyVj';
-    auth.userID.value = _nfcData.value;
-    var docRef = db.collection('pets').doc(_nfcData.value);
-    docRef.get().then((value) {
-      _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
-      _image.value = _userData.value.image!;
-      if (_userData.value.image.toString() == '') {
-        _localImage.value = true;
-      } else {
-        _byteImage.value = _userData.value.image.toString();
-        _localImage.value = false;
-      }
-    });
   }
 
   void tagRead() {
@@ -118,7 +106,11 @@ class HomeController extends GetxController {
       //print('test: ${id.substring(3, id.length)}');
       _nfcData.value = id.substring(3, id.length);
       auth.userID.value = _nfcData.value;
-      box.write('nfcData', _nfcData.value.toString());
+      await box.write('nfcData', _nfcData.value.toString()).then((value) {
+        if (Platform.isIOS) {
+          stopRead();
+        }
+      });
       var docRef = db.collection('pets').doc(_nfcData.value);
       docRef.get().then((value) {
         _userData.value = UserData.fromJson(value.data() as Map<String, dynamic>);
@@ -168,6 +160,10 @@ class HomeController extends GetxController {
     //     print("Tag isn't valid");
     //   }
     // });
+  }
+
+  void stopRead() {
+    NfcManager.instance.stopSession();
   }
 
   Future<void> listener() async {

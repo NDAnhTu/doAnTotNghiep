@@ -14,7 +14,7 @@ class ThamKhamView extends GetView<ThamKhamController> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: const Text('Thông tin chung', style: TextStyle(color: Color.fromARGB(255, 1, 133, 102))),
+        title: const Text('Thông tin chung', style: TextStyle(color: Color.fromARGB(255, 1, 133, 102), fontWeight: FontWeight.w700)),
       ),
       body: SingleChildScrollView(
         child: Column(
