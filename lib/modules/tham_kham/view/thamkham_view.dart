@@ -12,6 +12,7 @@ class ThamKhamView extends GetView<ThamKhamController> {
     return Scaffold(
       backgroundColor: Colors.grey[30],
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text('Thông tin chung', style: TextStyle(color: Color.fromARGB(255, 1, 133, 102), fontWeight: FontWeight.w700)),
