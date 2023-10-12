@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controller/thamkham_controller.dart';
+import '../controller/all_services_controller.dart';
 
 class AllServicesView extends GetView<AllServicesController> {
   AllServicesView({Key? key}) : super(key: key);
@@ -35,10 +35,10 @@ class AllServicesView extends GetView<AllServicesController> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+            const Padding(
+              padding: EdgeInsets.only(top: 20, left: 15, right: 15),
               child: Row(
-                children: const [
+                children: [
                   SizedBox(
                     height: 25,
                     width: 25,

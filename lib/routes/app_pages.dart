@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import '../modules/all_services/binding/thamkham_binding.dart';
-import '../modules/all_services/view/thamkham_view.dart';
+import '../modules/all_services/binding/all_services_binding.dart';
+import '../modules/all_services/view/all_services_view.dart';
 import '../modules/dich_vu/binding/dichvu_binding.dart';
 import '../modules/dich_vu/view/dichvu_view.dart';
 import '../modules/edit_page/binding/edit_binding.dart';

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../dich_vu/view/dichvu_view.dart';
 import '../../home/view/home_view.dart';
 import '../../mua_sam/view/mausam_view.dart';
-import '../../tham_kham/view/thamkham_view.dart';
+import '../../thong_tin/view/thongtin_view.dart';
 import '../controller/main_controller.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 

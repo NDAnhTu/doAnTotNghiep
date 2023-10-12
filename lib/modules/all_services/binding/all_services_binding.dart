@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../controller/thamkham_controller.dart';
+import '../controller/all_services_controller.dart';
 
 class AllServicesBinding extends Bindings {
   @override
