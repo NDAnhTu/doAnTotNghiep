@@ -23,6 +23,7 @@ class ThamKhamController extends GetxController {
           tipsData.id = tips.id;
           _tipsList.add(tipsData);
         }
+        _tipsList.shuffle();
       }
     });
   }
