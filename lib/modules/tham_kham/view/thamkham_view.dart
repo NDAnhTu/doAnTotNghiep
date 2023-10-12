@@ -60,7 +60,7 @@ class ThamKhamView extends GetView<ThamKhamController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 160,
+                        height: 200,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5)),
                           image: DecorationImage(

@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   final _byteImage = ''.obs;
   final _localImage = true.obs;
   final _image = ''.obs;
+  final _loading = false.obs;
   var box = GetStorage();
 
 
@@ -32,6 +33,7 @@ class HomeController extends GetxController {
   String get byteImage => _byteImage.value;
   String get image => _image.value;
   bool get localImage => _localImage.value;
+  bool get loading => _loading.value;
 
   set nfcData(value) => _nfcData.value = value;
   set imagePath(value) => _imagePath.value = value;
@@ -239,21 +241,6 @@ class HomeController extends GetxController {
         return;
       }
     });
-  }
-
-  Future<void> imagePick() async {
-    await picker.pickImage(source: ImageSource.gallery, requestFullMetadata: true);
-  }
-
-  Future<void> uploadImage(filePath) async {
-    Uint8List readFile = await File(filePath).readAsBytes();
-    String imageBase64 = base64.encode(readFile);
-    db.collection('pets').doc(_nfcData.value).update({"image": imageBase64});
-  }
-
-  Future<void> loadImage(bas64) async {
-    _byteImage.value = const Base64Decoder().convert(bas64).toString();
-    print(_byteImage.value);
   }
 
   @override

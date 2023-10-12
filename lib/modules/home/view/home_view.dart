@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../../../theme/colors.dart';
 import '../controller/home_controller.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
@@ -42,31 +44,32 @@ class HomeView extends GetView<HomeController> {
               maxHeight: Get.height,
               /// image
               body: Obx(() => Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Stack(
                     children: [
-                      Stack(
-                        children: [
-                          Center(
-                            child: Container(
-                              height: Get.width,
-                              width: Get.width,
-                              color: Colors.white,
-                              child: controller.userData.image!.isNotEmpty
-                                  ? Image.memory(
-                                      base64Decode(controller.image.toString()),
-                                      fit: BoxFit.fill)
-                                  // : const FlutterLogo(size: 150,)),
-                                  : Image.asset('assets/images/bg.png'),
-                            ),
-                          ),
-                        ],
+                      Center(
+                        child: Container(
+                          height: Get.width,
+                          width: Get.width,
+                          color: Colors.white,
+                          child: controller.userData.image!.isNotEmpty
+                              ? Image.memory(
+                              base64Decode(controller.image.toString()),
+                              fit: BoxFit.fill)
+                          // : const FlutterLogo(size: 150,)),
+                              : Image.asset('assets/images/bg.png'),
+                        ),
                       ),
                     ],
-                  )),
+                  ),
+                ],
+              )),
               /// information
               panelBuilder: (ScrollController sc) => scrollView(context, sc),
-        )),
+            ),
+        ),
       ),
     );
   }

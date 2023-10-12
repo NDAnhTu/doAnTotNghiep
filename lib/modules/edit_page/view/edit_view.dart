@@ -14,7 +14,7 @@ class EditView extends GetView<EditController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.5,
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
@@ -29,14 +29,13 @@ class EditView extends GetView<EditController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(),
             
             /// image
             Center(
               child: Container(
                 height: 300,
                 width: 300,
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.only(left: 20, top: 20, right: 20),
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   border: Border.all(width: 2, color: Colors.greenAccent),
