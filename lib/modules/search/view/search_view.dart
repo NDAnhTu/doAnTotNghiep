@@ -62,7 +62,10 @@ class SearchView extends GetView<SearchViewController> {
                   },
                 ),
               )
-              : const Text('Không tìm thấy kết quả')
+              : const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Center(child: Text('Không tìm thấy kết quả', style: TextStyle(fontSize: 20),)),
+              )
         ],
       )),
     );

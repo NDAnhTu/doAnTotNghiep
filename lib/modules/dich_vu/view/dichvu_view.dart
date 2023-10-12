@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import '../controller/dichvu_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DichVuView extends GetView<DichVuController> {
   DichVuView({Key? key}) : super(key: key);
+
+  String adoptionURL = 'https://pety.vn/blog/pety-adoption-tim-mai-am-moi-cho-cac-ban-cho-meo-bi-bo-roi.html';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,16 +86,24 @@ class DichVuView extends GetView<DichVuController> {
                 select('assets/images/services/another.png', 'Cơ sở'),
               ],
             ),
-            Container(
-              height: 200,
-              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                decoration: BoxDecoration(
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/services/adop.png'),
-                    fit: BoxFit.fill,
+            InkWell(
+              onTap: () {
+                // launchUrl(Uri.parse(adoptionURL), mode: LaunchMode.inAppWebView, webViewConfiguration: const WebViewConfiguration(
+                //   enableJavaScript: true,
+                // ));
+                Get.toNamed('/search', arguments: [{"data": controller.shopData}]);
+              },
+              child: Container(
+                height: 200,
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  decoration: BoxDecoration(
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/services/adop.png'),
+                      fit: BoxFit.fill,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  borderRadius: BorderRadius.circular(30),
-                ),
+              ),
             ),
             Column(
               children: [
@@ -112,13 +123,18 @@ class DichVuView extends GetView<DichVuController> {
     );
   }
   Widget select(String image, String text) {
-    return SizedBox(
-      height: 50,
-      child: Column(
-        children: [
-          Image.asset(image, fit: BoxFit.contain, height: 75,),
-          Text(text),
-        ],
+    return InkWell(
+      onTap: () {
+        Get.toNamed('/search', arguments: [{"data": controller.shopData}]);
+      },
+      child: SizedBox(
+        height: 50,
+        child: Column(
+          children: [
+            Image.asset(image, fit: BoxFit.contain, height: 75,),
+            Text(text),
+          ],
+        ),
       ),
     );
   }
