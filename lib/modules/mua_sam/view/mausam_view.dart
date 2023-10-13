@@ -102,7 +102,7 @@ class MuaSamView extends GetView<MuaSamController> {
             ),
             GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  childAspectRatio: 0.8,
+                  childAspectRatio: 0.6,
                   maxCrossAxisExtent: 200,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
@@ -158,7 +158,6 @@ class MuaSamView extends GetView<MuaSamController> {
   }
   Widget select(String image, String text) {
     return SizedBox(
-      height: 45,
       child: Column(
         children: [
           Container(
@@ -169,7 +168,7 @@ class MuaSamView extends GetView<MuaSamController> {
                 ),
               ),
               child: Image.asset(image, fit: BoxFit.contain, height: 55)),
-          Text(text, textAlign: TextAlign.center),
+          Text(text, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, maxLines: 1),
         ],
       ),
     );

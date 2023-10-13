@@ -72,7 +72,6 @@ class SearchView extends GetView<SearchViewController> {
   }
   Widget shopList(index) {
     return Container(
-      height: Get.height / 8.5,
       margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
       child: Row(
         children: [

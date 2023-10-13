@@ -144,7 +144,7 @@ class DichVuView extends GetView<DichVuController> {
         Get.toNamed('/all_services', arguments: [{"shopData": controller.shopData[index], "services": controller.services[index]}]);
       },
       child: Container(
-        height: Get.height / 8.5,
+        // height: Get.height / 7.9,
         margin: const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
         child: Row(
           children: [
