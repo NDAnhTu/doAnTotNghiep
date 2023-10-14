@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:petcare/modules/chatbot/binding/chatbot_binding.dart';
+import 'package:petcare/modules/chatbot/view/chatbot_view.dart';
 import '../modules/all_services/binding/all_services_binding.dart';
 import '../modules/all_services/view/all_services_view.dart';
 import '../modules/dich_vu/binding/dichvu_binding.dart';
@@ -56,6 +58,13 @@ class AppPages {
       name: _Paths.edit,
       page: () => EditView(),
       binding: EditBinding(),
+      transition: Transition.cupertinoDialog,
+      children: const [],
+    ),
+    GetPage(
+      name: _Paths.chatbot,
+      page: () => ChatBotView(),
+      binding: ChatBotBinding(),
       transition: Transition.cupertinoDialog,
       children: const [],
     ),

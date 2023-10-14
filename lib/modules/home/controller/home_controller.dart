@@ -50,9 +50,9 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     await loadDataFromLocalStorage().then((value) async {
       listener();
-      if (value == false) {
-        await checkNFC();
-      }
+      // if (value == false) {
+      //   await checkNFC();
+      // }
     });
     super.onInit();
   }

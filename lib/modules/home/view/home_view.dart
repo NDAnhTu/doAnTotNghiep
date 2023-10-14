@@ -33,17 +33,22 @@ class HomeView extends GetView<HomeController> {
           return false;
         },
         child: Scaffold(
-            body: SlidingUpPanel(
-              borderRadius: const BorderRadius.only(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: AppColors.primaryColor,
+            child: const Icon(Icons.message),
+              onPressed: () async {await Get.toNamed('/chatbot');
+          }),
+          body: SlidingUpPanel(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(35),
                 topRight: Radius.circular(35),
               ),
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-              margin: EdgeInsets.only(top: Get.height / 20),
-              minHeight: Get.height - Get.width - 40,
-              maxHeight: Get.height,
-              /// image
-              body: Obx(() => Column(
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+            margin: EdgeInsets.only(top: Get.height / 20),
+            minHeight: Get.height - Get.width - 40,
+            maxHeight: Get.height,
+            /// image
+            body: Obx(() => Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -66,9 +71,9 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               )),
-              /// information
-              panelBuilder: (ScrollController sc) => scrollView(context, sc),
-            ),
+            /// information
+            panelBuilder: (ScrollController sc) => scrollView(context, sc),
+          ),
         ),
       ),
     );
