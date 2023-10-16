@@ -8,6 +8,6 @@ class AuthenService extends GetxService {
   @override
   void onInit() {
     super.onInit();
-    userID.value = box.read('nfcData') ?? '1m6kc1nLyi9olQruQyVj';
+    userID.value = box.read('nfcData') ?? '';
   }
 }
