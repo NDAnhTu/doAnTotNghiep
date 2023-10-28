@@ -7,8 +7,9 @@ abstract class Routes {
   static const edit        = _Paths.edit;
   static const main        = _Paths.main;
   static const search      = _Paths.search;
-  static const dichvu      = _Paths.dichvu;
-  static const chatbot     = _Paths.chatbot;
+  static const dichVu      = _Paths.dichVu;
+  static const chatBot     = _Paths.chatBot;
+  static const newsDetail  = _Paths.newsDetail;
   static const allServices = _Paths.allServices;
 }
 
@@ -17,7 +18,8 @@ abstract class _Paths {
   static const edit    = '/edit';
   static const main    = '/main';
   static const search  = '/search';
-  static const dichvu  = '/dichvu';
-  static const chatbot = '/chatbot';
+  static const dichVu  = '/dichvu';
+  static const chatBot = '/chatbot';
+  static const newsDetail = '/news_detail';
   static const allServices = '/all_services';
 }

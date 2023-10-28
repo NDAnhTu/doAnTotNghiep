@@ -60,10 +60,7 @@ class HomeView extends GetView<HomeController> {
                           width: Get.width,
                           color: Colors.white,
                           child: controller.userData.image!.isNotEmpty
-                              ? Image.memory(
-                              base64Decode(controller.image.toString()),
-                              fit: BoxFit.fill)
-                          // : const FlutterLogo(size: 150,)),
+                              ? Image.memory(base64Decode(controller.image.toString()), fit: BoxFit.fill)
                               : Image.asset('assets/images/bg.png'),
                         ),
                       ),

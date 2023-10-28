@@ -54,50 +54,55 @@ class ThamKhamView extends GetView<ThamKhamController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.tipsList.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.all(25),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5)),
-                              image: DecorationImage(
-                                image: MemoryImage(base64Decode(controller.tipsList[index].thumb.toString())),
-                                fit: BoxFit.fitWidth,
+                    return InkWell(
+                      onTap: () async {
+                        await Get.toNamed('/news_detail', arguments: [{"ID": controller.tipsList[index].id, "title": controller.tipsList[index].title, "introduce": controller.tipsList[index].introduce, "thumb": controller.tipsList[index].thumb}]);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(25),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+                                image: DecorationImage(
+                                  image: MemoryImage(base64Decode(controller.tipsList[index].thumb.toString())),
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('THÔNG TIN CHUNG', style: TextStyle(color: Color.fromARGB(255, 1, 133, 102), fontSize: 15, fontWeight: FontWeight.bold)),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(controller.tipsList[index].title.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(controller.tipsList[index].introduce.toString(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300), textAlign: TextAlign.justify),
-                              ],
+                            const SizedBox(
+                              height: 5,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text('THÔNG TIN CHUNG', style: TextStyle(color: Color.fromARGB(255, 1, 133, 102), fontSize: 15, fontWeight: FontWeight.bold)),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(controller.tipsList[index].title.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(controller.tipsList[index].introduce.toString(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300), textAlign: TextAlign.justify),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:petcare/modules/chatbot/binding/chatbot_binding.dart';
 import 'package:petcare/modules/chatbot/view/chatbot_view.dart';
+import 'package:petcare/modules/news_detail/binding/news_detail_binding.dart';
 import '../modules/all_services/binding/all_services_binding.dart';
 import '../modules/all_services/view/all_services_view.dart';
 import '../modules/dich_vu/binding/dichvu_binding.dart';
@@ -11,6 +12,7 @@ import '../modules/home/binding/home_binding.dart';
 import '../modules/home/view/home_view.dart';
 import '../modules/main/binding/main_binding.dart';
 import '../modules/main/view/main_view.dart';
+import '../modules/news_detail/view/news_detail_view.dart';
 import '../modules/search/binding/search_binding.dart';
 import '../modules/search/view/search_view.dart';
 part 'app_routes.dart';
@@ -29,7 +31,7 @@ class AppPages {
       children: const [],
     ),
     GetPage(
-      name: _Paths.dichvu,
+      name: _Paths.dichVu,
       page: () => DichVuView(),
       binding: DichVuBinding(),
       children: const [],
@@ -62,10 +64,17 @@ class AppPages {
       children: const [],
     ),
     GetPage(
-      name: _Paths.chatbot,
+      name: _Paths.chatBot,
       page: () => ChatBotView(),
       binding: ChatBotBinding(),
       transition: Transition.cupertinoDialog,
+      children: const [],
+    ),
+    GetPage(
+      name: _Paths.newsDetail,
+      page: () => NewsDetailView(),
+      binding: NewsDetailBinding(),
+      transition: Transition.cupertino,
       children: const [],
     ),
   ];
