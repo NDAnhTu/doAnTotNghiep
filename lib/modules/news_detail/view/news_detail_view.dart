@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,8 @@ class NewsDetailView extends GetView<NewsDetailController> {
     return Scaffold(
       backgroundColor: Colors.grey[30],
       appBar: AppBar(
+        centerTitle: false,
+        titleSpacing: 0.0,
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text('Thông tin chung', style: TextStyle(color: AppColors.newsColor, fontWeight: FontWeight.w700)),
