@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:petcare/modules/chatbot/binding/chatbot_binding.dart';
 import 'package:petcare/modules/chatbot/view/chatbot_view.dart';
 import 'package:petcare/modules/news_detail/binding/news_detail_binding.dart';
+import 'package:petcare/modules/web_view/binding/web_view_binding.dart';
+import 'package:petcare/modules/web_view/view/web_view_view.dart';
 import '../modules/all_services/binding/all_services_binding.dart';
 import '../modules/all_services/view/all_services_view.dart';
 import '../modules/dich_vu/binding/dichvu_binding.dart';
@@ -74,6 +76,13 @@ class AppPages {
       name: _Paths.newsDetail,
       page: () => NewsDetailView(),
       binding: NewsDetailBinding(),
+      transition: Transition.cupertino,
+      children: const [],
+    ),
+    GetPage(
+      name: _Paths.webView,
+      page: () => WebView(),
+      binding: WebViewBinding(),
       transition: Transition.cupertino,
       children: const [],
     ),

@@ -56,7 +56,7 @@ class ThamKhamView extends GetView<ThamKhamController> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () async {
-                        await Get.toNamed('/news_detail', arguments: [{"ID": controller.tipsList[index].id, "title": controller.tipsList[index].title, "introduce": controller.tipsList[index].introduce, "thumb": controller.tipsList[index].thumb}]);
+                        await Get.toNamed('/webview', arguments: [{"url": controller.tipsList[index].url}]);
                       },
                       child: Container(
                         margin: const EdgeInsets.all(25),
