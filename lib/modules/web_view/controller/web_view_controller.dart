@@ -21,17 +21,21 @@ class WebViewController extends GetxController {
   InAppWebViewController? webViewController;
   PullToRefreshController? pullToRefreshController;
 
-  InAppWebViewSettings settings = InAppWebViewSettings(
-    supportZoom: false,
-    isInspectable: true,
-    javaScriptEnabled: true,
-    useHybridComposition: true,
-    transparentBackground: true,
-    disableHorizontalScroll: true,
-    allowsInlineMediaPlayback: true,
-    useShouldOverrideUrlLoading: true,
-    mediaPlaybackRequiresUserGesture: false,
-    preferredContentMode: UserPreferredContentMode.MOBILE,
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+    crossPlatform: InAppWebViewOptions(
+      supportZoom: false,
+      javaScriptEnabled: true,
+      transparentBackground: true,
+      useShouldOverrideUrlLoading: true,
+      mediaPlaybackRequiresUserGesture: false,
+      preferredContentMode: UserPreferredContentMode.MOBILE,
+    ),
+    android: AndroidInAppWebViewOptions(
+      useHybridComposition: true,
+    ),
+    ios: IOSInAppWebViewOptions(
+      allowsInlineMediaPlayback: true,
+    ),
   );
 
   @override
@@ -39,7 +43,7 @@ class WebViewController extends GetxController {
     super.onInit();
     _url.value = argumentData[0]['url'];
     pullToRefreshController = PullToRefreshController(
-      settings: PullToRefreshSettings(
+      options: PullToRefreshOptions(
           color: AppColors.newsColor,
       ),
       onRefresh: () async {

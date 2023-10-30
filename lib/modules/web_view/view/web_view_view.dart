@@ -30,8 +30,8 @@ class WebView extends GetView<WebViewController> {
         children: [
           InAppWebView(
             key: webViewKey,
-            initialSettings: controller.settings,
-            initialUrlRequest: URLRequest(url: WebUri(controller.url)),
+            initialOptions: controller.options,
+            initialUrlRequest: URLRequest(url: Uri.parse(controller.url)),
             pullToRefreshController: controller.pullToRefreshController,
             onWebViewCreated: (ctrl) {
               controller.webViewController = ctrl;
@@ -40,10 +40,10 @@ class WebView extends GetView<WebViewController> {
               controller.isLoading = true;
               controller.url = url.toString();
             },
-            onPermissionRequest: (controller, request) async {
-              return PermissionResponse(
-                  resources: request.resources,
-                  action: PermissionResponseAction.GRANT);
+            androidOnPermissionRequest: (controller, origin, resources) async {
+              return PermissionRequestResponse(
+                  resources: resources,
+                  action: PermissionRequestResponseAction.GRANT);
             },
             shouldOverrideUrlLoading: (ctrl, navigationAction) async {
               var    uri     = navigationAction.request.url!;
@@ -57,7 +57,7 @@ class WebView extends GetView<WebViewController> {
                 controller.isLoading = false;
               });
             },
-            onReceivedError: (ctrl, request, error) {
+            onLoadError: (ctrl, url, code, message) {
               controller.pullToRefreshController?.endRefreshing();
             },
             onProgressChanged: (ctrl, progress) async {
