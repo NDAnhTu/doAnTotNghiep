@@ -27,6 +27,7 @@ class WebViewController extends GetxController {
     javaScriptEnabled: true,
     useHybridComposition: true,
     transparentBackground: true,
+    disableHorizontalScroll: true,
     allowsInlineMediaPlayback: true,
     useShouldOverrideUrlLoading: true,
     mediaPlaybackRequiresUserGesture: false,
@@ -39,7 +40,7 @@ class WebViewController extends GetxController {
     _url.value = argumentData[0]['url'];
     pullToRefreshController = PullToRefreshController(
       settings: PullToRefreshSettings(
-          color: AppColors.primaryColor,
+          color: AppColors.newsColor,
       ),
       onRefresh: () async {
         if (Platform.isAndroid) {

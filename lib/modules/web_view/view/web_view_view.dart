@@ -18,7 +18,7 @@ class WebView extends GetView<WebViewController> {
         titleSpacing: 0.0,
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Text('WebView', style: TextStyle(color: AppColors.newsColor, fontWeight: FontWeight.w700)),
+        title: Text('Thông tin chung', style: TextStyle(color: AppColors.newsColor, fontWeight: FontWeight.w700)),
         leading: IconButton(
           onPressed: () {
             Get.back();
